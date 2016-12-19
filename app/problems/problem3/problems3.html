@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Problem # {{problemData.id}}</h2>
+            <h4>{{problemData.description}}</h4>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+    <form name="problemForm" ng-submit="processSolution()">
+        <div class="col-md-12">
+
+                <div class="solutions-list form-group">
+                    <!-- SOLUTION LIST -->
+                    <div ng-repeat="solution in problemData.solutions" class="solution-item">
+                        <input type="radio" name="solutionsList" id="solution{{$index}}" value="{{$index}}" ng-model="userData.solutionMarked" ng-disabled="userData.userAnswered" ng-required="!userData.solutionMarked" />
+                        <label for="solution{{$index}}">{{solution.description}}</label>
+                    </div>
+                </div>
+
+        </div>
+        <div class="col-md-6 col-sm-12 solutions-button">
+            <!-- SUBMIT BUTTON -->
+            <button ng-hide="!userData.solutionMarked || userData.userAnswered" type="submit" class="btn btn-block btn-primary btn-lg" ng-disabled="problemForm.$invalid">I am sure about this</button>
+        </div>
+        <div class="col-md-6 col-sm-12 solutions-button" ng-hide="userData.userAnswered">
+            <!-- HINT BUTTON -->
+            <button class="btn btn-default btn-block btn-lg" ng-click="showNewHint(hintNumber)">I need a hint</button>
+        </div>
+        </form>
+    </div>
+</div>
+<!-- HINTS -->
+<div class="row">
+    <div class="col-md-12">
+        <div ng-repeat="hint in hintsShown" class="alert alert-info alert-dismissible" role="alert">
+            <center>
+                <h2><strong>Hint {{$index}}</strong></h2>
+                <p>{{hint}}</p>
+            </center>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<!-- SOLUTION EXPLANATION -->
+<div class="row" ng-show="userData.userAnswered">
+    <!-- RESULT -->
+    <div class="col-md-12" ng-show="userData.userAnsweredRight">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <center>
+                <h2><strong>Nice one!</strong></h2>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+            </center>
+        </div>
+    </div>
+    <div class="col-md-12" ng-show="!userData.userAnsweredRight">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <center>
+                <h2><strong>Oh snap!</strong></h2>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+            </center>
+        </div>
+    </div>
+    <!-- DETAIL EXPLANATION -->
+    <div ng-include="'/problems/problem1/solution1.html'"></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="pull-right"><a href=".#/problems">Want to try another?</a></h4>
+    </div>
+</div>
+<div class="row">
+    <!-- SHOW OFF OBJECTS -->
+        <br>
+        <br>
+        <br>
+        <h2>Objects</h2>
+        <pre>
+problemData {{problemData|json}}
+userData {{userData | json}}
+hintsShown {{hintsShown | json}}
+        </pre>
+</div>
+</div>

@@ -38,7 +38,13 @@ angular
               url: '/one',
               templateUrl: '/problems/problem1/problems.one.html',
               controller: 'Problem1Ctrl'
-          });
+          })
+          .state('three', {
+              url: '/three',
+              templateUrl: '/problems/problem3/problems3.html',
+              controller: 'Problem3Ctrl'
+          })
+          ;
       $urlRouterProvider.otherwise('/home');
     });
 
