@@ -8,23 +8,23 @@
  * Controller of the codeJamApp
  */
 angular.module('codeJamApp')
-    .controller('Problem3Ctrl', ['$scope', function($scope) {
+    .controller('Problem4Ctrl', ['$scope', function($scope) {
         // object to hold  form information
         // $scope will allow this to pass between controller and view
         $scope.problemData = {
-            "id": 3,
-            "name": "Anagrams",
-            "description": "Given a single word (the word) and an array of all valid words (dictionary), determine whether the word is an anagram of any word in the dictionary.",
+            "id": 4,
+            "name": "Divide and Conquer",
+            "description": "Describe how you could use a single array to implement three stacks.",
             "solutions": [{
-                "description": "Compare each word with the words in the list by checking for their alphabets.",
+                "description": "Dividing array in equally segmented stacks.",
                 "correct": true
             }, {
-                "description": "Search for word having same length as the target word.",
+                "description": "Taking each stack sequentially and inserting elements as they are received as input. ",
                 "correct": false
             }],
             "hints": [
-                 "alphabetical order",
-                "prime numbers have unique products "
+                "How would you fill a shelve with stack of multiple specific course books",
+                "Oops No more hints"
             ]
         };
 

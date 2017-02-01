@@ -1,61 +1,150 @@
 <div class="col-md-12">
-    <h2>Approach #1 (Brute Force) [Accepted]</h2>
-    <p>The brute force approach is simple. Loop through each element x and find if there is another value that equals to target - x.</p>
-    <pre>
-        <code class="java">
-public int[] twoSum(int[] nums, int target) {
-    for (int i = 0; i < nums.length; i++) {
-        for (int j = i + 1; j < nums.length; j++) {
-            if (nums[j] == target - nums[i]) {
-                return new int[] { i, j };
-            }
+    <h2>Approach #1 </h2>
+    <p>The best approach that comes to mind first would be to create a lookup table where every alphabet has a prime number assigned to it.</p>
+    <p>Then all it needs to be done is comparison between the products of all numbers forming the target word and the words from list.</p>
+    <p>If equal the word makes to the output. Just in case the product generated doesn’t cause overflow issues it is better to hash the values and then store it.</p>
+<div hljs hljs-no-escape>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define COUNTOF(a) (sizeof (a)/ sizeof (a)[0])
+
+typedef unsigned long long HashVal;
+HashVal hashmem (char *str, size_t len);
+
+unsigned char primes26[] =
+{
+5,71,79,19,2,83,31,43,11,53,37,23,41,3,13,73,101,17,29,7,59,47,61,97,89,67,
+};
+
+struct anahash {
+        struct anahash *next;
+        unsigned freq;
+        HashVal hash;
+        char word[1];
+        };
+
+struct anahash *hashtab[1024*1024] = {NULL,};
+struct anahash *new_word(char *str, size_t len);
+struct anahash **hash_find(struct anahash *wp);
+
+/*********************************************/
+
+HashVal hashmem (char *str, size_t len)
+{
+size_t idx;
+HashVal val=1;
+
+if (!len) return 0;
+for (idx = 0; idx < len; idx++) {
+        char ch = str[idx];
+        if (ch >= 'A' && ch <= 'Z' ) val *= primes26[ ch - 'A'];
+        else if (ch >= 'a' && ch <= 'z' ) val *= primes26[ ch - 'a'];
+        else continue;
         }
-    }
-    throw new IllegalArgumentException("No two sum solution");
+return val;
 }
-        </code>
-    </pre>
+
+struct anahash *new_word(char *str, size_t len)
+{
+struct anahash *wp;
+if (!len) len = strlen(str);
+
+wp = malloc(len + sizeof *wp );
+wp->hash = hashmem(str, len);
+wp->next = NULL;
+wp->freq = 0;
+memcpy (wp->word, str, len);
+wp->word[len] = 0;
+return wp;
+}
+
+struct anahash **hash_find(struct anahash *wp)
+{
+unsigned slot;
+struct anahash **pp;
+
+slot = wp->hash % COUNTOF(hashtab);
+
+for (pp = &hashtab[slot]; *pp; pp= &(*pp)->next) {
+        if ((*pp)->hash < wp->hash) continue;
+        if (strcmp( wp->word, (*pp)->word ) > 0) continue;
+        break;
+        }
+return pp;
+}
+
+char buff [16*4096];
+int main (void)
+{
+size_t pos,end;
+struct anahash *wp, **pp;
+HashVal val;
+
+memset(hashtab, 0, sizeof hashtab);
+
+while (fgets(buff, sizeof buff, stdin)) {
+        for (pos=0; pos < sizeof buff && buff[pos]; ) {
+                for(end = pos; end < sizeof buff && buff[end]; end++ ) {
+                        if (buff[end] < 'A' || buff[end] > 'z') break;
+                        if (buff[end] > 'Z' && buff[end] < 'a') break;
+                        }
+                if (end > pos) {
+                        wp = new_word(buff+pos, end-pos);
+                        if (!wp) {pos=end; continue; }
+                        pp = hash_find(wp);
+                        if (!*pp) *pp = wp;
+                        else if ((*pp)->hash == wp->hash
+                         && !strcmp((*pp)->word , wp->word)) free(wp);
+                        else { wp->next = *pp; *pp = wp; }
+                        (*pp)->freq +=1;
+                        }
+                pos = end;
+                for(end = pos; end < sizeof buff && buff[end]; end++ ) {
+                        if (buff[end] >= 'A' && buff[end] <= 'Z') break;
+                        if (buff[end] >= 'z' && buff[end] <= 'a') break;
+                        }
+                pos = end;
+                }
+        }
+
+
+for (pos = 0;  pos < COUNTOF(hashtab); pos++) {
+        if (! &hashtab[pos] ) continue;
+
+        for (pp = &hashtab[pos]; wp = *pp; pp = &wp->next) {
+                if (val != wp->hash) {
+                        fprintf (stdout, "\nSlot:%u:\n", pos );
+                        val = wp->hash;
+                        }
+                fprintf (stdout, "\t%llx:%u:%s\n", wp->hash, wp->freq, wp->word);
+                }
+        }
+
+return 0;
+}
+</div>
     <h3>Complexity Analysis</h3>
     <ul>
-        <li>Time complexity: O(n^2). For each element, we try to find its complement by looping through the rest of array which takes O(n) time. Therefore, the time complexity is O(n^2).</li>
-        <li>Space complexity: O(1)</li>
-    </ul>
-    <p>Improving onto that we know that we need to find the students with the complement amount of money so that the net sum is exactly the target amount and then find their respective indexes.</p>
-    <p>To achieve that there is a trade off between time and space. As we saw in the previous method the time complexity is high but space complexity is O(1). Now to change it we use hash table and reduce the time complexity to O(1) from O(n) for look up. This does takes into consideration that there is no or almost zero chances for collision to happen during hashing.</p>
-    <p>Finally, below in the code there two phases where in first the student data with their money is stored into the hash table and in the second phase the complement is being searched while also keeping a check that the number itself is not the complement.</p>
-    <pre>
-        <code>
-public int[] twoSum(int[] nums, int target) {
-    Map<Integer, Integer> map = new HashMap<>();
-    for (int i = 0; i < nums.length; i++) {
-        map.put(nums[i], i);
-    }
-    for (int i = 0; i < nums.length; i++) {
-        int complement = target - nums[i];
-        if (map.containsKey(complement) && map.get(complement) != i) {
-            return new int[] { i, map.get(complement) };
-        }
-    }
-    throw new IllegalArgumentException("No two sum solution");
-}
-        </code>
-    </pre>
-    <h3>Complexity Analysis</h3>
-    <ul>
-        <li>Time complexity: O(n). We traverse the list containing n elements exactly twice. Since the hash table reduces the look up time to O(1), the time complexity is O(n).</li>
+        <li>Time complexity: O(n^2), reason being that even though it does provide the right solution for the problem we have on hand but it will loop through all the elements every time a new target word’s anagrams are required to be found.</li>
         <li>Space complexity: O(n). The extra space required depends on the number of items stored in the hash table, which stores exactly n elements.</li>
     </ul>
-    <p>To improve the functionality even further every element being inserted can be checked for its complement in the previously completed hash table and if it exist then there is no need to parse the rest of the data into the hash table</p>
-    <pre>
-        <code>
-public int[] twoSum(int[] nums, int target) { Map
-    <Integer, Integer> map = new HashMap
-        <>(); for (int i = 0; i
-            < nums.length; i++) { int complement=t arget - nums[i]; if (map.containsKey(complement)) { return new int[] { map.get(complement), i }; } map.put(nums[i], i); } throw new IllegalArgumentException( "No two sum solution"); }
-    </code>
-</pre>
+    <br>
+    <p>The best solution to this would be to create a generic arraylist of an String and arraylist where the string has the word sorted in alphabetical order
+    and the arraylist attached will have all the words from the main list which if sorted in alphabetical order are the same as the string.</p>
+    <p>This way we will have a String as they key and all associated anagrams which can be formed using those letters in the list next to it.</p>
+    <p>This makes looking up quicker as when the match is found then no further lookup is required all the anagrams will be returned in one go. </p>
+
     <h3>Complexity Analysis</h3>
     <ul>
-        <li>Time complexity: O(n). We traverse the list containing n elements only once. Each look up in the table costs only O(1) time.</li>
-        <li>Space complexity: O(n). The extra space required depends on the number of items stored in the hash table, which stores at most n elements.</li>
+        <li>Time complexity: O(1).Since we will use arraylist lookup time complexity drastically reduced to O(1).</li>
     </ul>
+    <br>
+<div class="row">
+    <div class="col-sm-12">
+        <hr width=25% class="pull-left">
+    </div>
+    <div class="col-sm-12">
+        <p class="pull-left" style="margin-bottom: 5px; color:#9d9d9d; font-size: 14px">Reference: <a style="color:#9d9d9d" target="_blank" href="http://justprogrammng.blogspot.com/2012/06/determine-anagrams-of-word-in-file.html" title="">http://justprogrammng.blogspot.com/2012/06/determine-anagrams-of-word-in-file.html</a></p>
+    </div>
+</div>

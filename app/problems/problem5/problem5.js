@@ -8,23 +8,23 @@
  * Controller of the codeJamApp
  */
 angular.module('codeJamApp')
-    .controller('Problem3Ctrl', ['$scope', function($scope) {
+    .controller('Problem5Ctrl', ['$scope', function($scope) {
         // object to hold  form information
         // $scope will allow this to pass between controller and view
         $scope.problemData = {
-            "id": 3,
-            "name": "Anagrams",
-            "description": "Given a single word (the word) and an array of all valid words (dictionary), determine whether the word is an anagram of any word in the dictionary.",
+            "id": 5,
+            "name": "Family Relation Tracking",
+            "description": "Consider the a family modeled into binary tree.  Write code to find the first common ancestor of two members. Avoid storing additional nodes in a data structure. NOTE: This is not necessarily a binary search tree.",
             "solutions": [{
-                "description": "Compare each word with the words in the list by checking for their alphabets.",
+                "description": "Trace two siblings back up looking for intersection in their paths.",
                 "correct": true
             }, {
-                "description": "Search for word having same length as the target word.",
+                "description": " Making a map how every element is in tree and looking for connection between two target nodes.",
                 "correct": false
             }],
             "hints": [
-                 "alphabetical order",
-                "prime numbers have unique products "
+                "No More Hints",
+                "What did I just said?"
             ]
         };
 

@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-md-12">
+        <center>
+            <h1>Algorithm Problem Solving Techniques</h1></center>
+            <br>
+        <h4 class="open-sans">Have you ever thought "how does netflix work" or "how google search works".<h4></h4>The answer is Algorithm. In the real world we use algorithm for problem solving techniques.
+        <h4></h4>The importance of algorithm can not be undermined. Algorithmis solely responsible for driving technical revolution in the past decade. Algorithm depends upon the time and space complexity.
+        <h4></h4>Good algorithms take less time and memory to perform a task. In case you need to create your own algorithm, you can use these five problem solving techniques.</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <br>
+        <h2><strong>1. Examplify</strong></h2><h2> Create the example of the algorithm</h2>
+        <br>
+        <p><strong>Before thinking about the logic of algorithm, make sure to understand the question clearly.</strong></p>
+        <p>Write at least two examples, indicating input and output. This two minute initial work will remove the uncertainty of misunderstanding the question and thinking in wrong direction.</p>
+        <h4 class="open-sans"><strong>For example</strong></h4>
+        <h4><em>Challenge: Find first non repeated character in the string.</em></h4>
+        <p>Before writing algorithm, please follow this steps:</p>
+        <p>Example 1 :</p>
+        <p>Input : AliveIsAwesome</p>
+        <p>Output : l (small L)</p>
+        <p>Example 2 :</p>
+        <p>Input : LoveYourself</p>
+        <p>Output : v</p>
+        <p>This is one of the mostly used problem solving techniques for algorithms.</p>
+        <br>
+        <h2><strong>2. Pattern Matching</strong></h2>
+        <br>
+        <p><strong>We have to consider what problems the algorithm is similar to , we need to figure out if we can modify the solution to develop an algorithm for the given problem.</strong></p>
+        <h4 class="open-sans"><strong>For example</strong></h4>
+        <h4><em>Challenge: A sorted array has been rotated so that the elements might appear in the order 3 4 5 6 7 1 2. How would you find the minimum element?.</em></h4>
+        <p style="margin-bottom: 10px;">Similar challenges:</p>
+        <ol>
+            <li>Find the minimum element in an array.</li>
+            <li>Find a particular element in an array (eg. binary search).</li>
+        </ol>
+        <p></p>
+        <p>Finding the minimum element in an array is unlikely to be useful here. As it does not use the information provided (that the array is sorted).</p>
+        <p>Binary search could be very useful. You know that the array is sorted, but rotated. So, it must proceed in an increasing order, then reset and increase again. The minimum element is the “reset” point.</p>
+        <p>Comparing the first and middle element (3 and 6), you know that the range is still increasing. It indicates that the reset point must be after the 6 (or, 3 is the minimum element and the array was never rotated).</p>
+        <p>You can continue to apply the lessons from binary search to pinpoint this reset point, by looking for ranges where LEFT > RIGHT. That is, for a particular point, if LEFT < RIGHT, then the range does not contain the reset. If LEFT> RIGHT, then it does.</p>
+        <br>
+        <h2><strong>3. Simplify and Generalize</strong></h2>
+        <br>
+        <p><strong>Changing constraint (e.g size,length,data type) to simplify the problem.</strong> For example changing the data type from double to int, make the problem smaller. Write algorithm for int data type and then generalize for double.</p>
+        <h4 class="open-sans"><strong>For example</strong></h4>
+        <h4><em>Challenge: Trim the white spaces in the password string</em></h4>
+        <p>Possible soluions:</p>
+        <ol>
+            <li>Left trim (remove whitespaces from the extreme left).</li>
+            <li>Right trim (remove whitespaces from the extreme right).</li>
+            <li>Remove white spaces in between the string.</li>
+        </ol>
+        <br>
+        <h2><strong>4. Base case and Build</strong></h2>
+        <h2>(Inductive Approach)</h2>
+        <br>
+        <p>This approach is most widely used in the recursive algorithm.</p>
+        <p>Solve the algorithm first for a base case (e.g., just one element). Then, try to solve it for elements one and two, assuming that we have the answer for element one. Then, try to solve it for elements one, two and three, assuming that we have the answer to elements one and two.</p>
+        <h4 class="open-sans"><strong>For example</strong></h4>
+        <h4><em>Challenge:  Find all possible permutations of a string , assuming all the characters in the string is unique.</em></h4>
+        <br>
+        <p>Input string : "abcdef"</p>
+        <p>Solving procedure:</p>
+
+        <p>Take one character at a time from the input string</p>
+        <p><strong>Base Case</strong></p>
+        <p>a(first element of the input string): a( possible permutation )</p>
+        <p><strong>Build</strong></p>
+        <p>ab : ab,ba</p>
+        <p>abc : abc,acb,bac,bca,cba,cab</p>
+        <p>abcd...</p>
+        <p>abcde...</p>
+        <p>abcdef...</p>
+        <br>
+        <h2><strong>5. Data Structure Brainstorm</strong></h2>
+        <br>
+        <p>This is tiresome method and based on hit and trial method . Simply, run through a list of data structures and try to apply each one.</p>
+        <h4 class="open-sans"><strong>For example</strong></h4>
+        <h4><em>Challenge:  Numbers are randomly generated and stored into an (expanding) array. How would we keep track of the median(odd number of elements : the middle number but if even number of elements then the average of the middle two elements)?</em></h4>
+        <br>
+        <p>Data Structure Brainstorm:</p>
+        <ol>
+            <li><em>Linked list:</em> Linked lists do not perform very well with accessing and sorting numbers. Hence it is better to avoid it.</li>
+            <br>
+            <li><em>Array:</em> Not sure, as we already have an array. It could be expensive to keep elements sorted in array. We will keep this option on hold and return to it if it’s needed.</li>
+            <br>
+            <li><em>Binary tree:</em> It  can be a viable option, since binary trees do fairly well with ordering. As we know the top of the perfectly balanced binary search tree is median if there’s an odd number of elements present in the binary search tree. But if there’s an even number of elements, the median is actually the average of the middle two elements. The middle two elements can’t both be at the top. This is probably we need to look at, let's hold off to it.</li>
+            <br>
+            <li><em>Heap:</em> A heap is really good at basic ordering and keeping track of max and mins. Suppose we had two heaps, we could keep track of the biggest half and the smallest half of the elements. The biggest half is kept in a min heap, such that the smallest element in the biggest half is at the root. The smallest half is kept in a max heap, such that the biggest element of the smallest half is at the root. Now, with these data structures, we have the potential median elements at the roots. If the heaps are no longer the same size, we can quickly “rebalance” the heaps by popping an element off the one heap and pushing it onto the other.</li>
+            <br>
+        </ol>
+        <blockquote>
+           <h4 class="open-sans"> <em>Note that the more problems you do, the better instinct you will develop about which data structure to apply.</em></h4>
+        </blockquote>
+    </div>
+</div>

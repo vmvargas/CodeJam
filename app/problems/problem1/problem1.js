@@ -9,10 +9,12 @@
  */
 angular.module('codeJamApp')
     .controller('Problem1Ctrl', ['$scope', function($scope) {
+
         // object to hold  form information
         // $scope will allow this to pass between controller and view
         $scope.problemData = {
             "id": 1,
+            "name": "Complimentary Sum Problem",
             "description": "Given a row of students where each student has some amount of money. Return the position of two students who have combined sum as specified target amount.",
             "solutions": [{
                 "description": "Loop through each element x and find if there is another value that equals to target - x.",

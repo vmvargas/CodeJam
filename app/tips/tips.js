@@ -2,12 +2,11 @@
 
 /**
  * @ngdoc function
- * @name codeJamApp.controller:ProblemsCtrl
+ * @name codeJamApp.controller:WelcomeCtrl
  * @description
- * # ProblemsCtrl
+ * # WelcomeCtrl
  * Controller of the codeJamApp
  */
 angular.module('codeJamApp')
-    .controller('ProblemsCtrl', function() {
-
-    });
+  .controller('TipsCtrl', function () {
+  });

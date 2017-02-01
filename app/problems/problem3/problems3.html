@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>Problem # {{problemData.id}}</h2>
-            <h4>{{problemData.description}}</h4>
+            <h1>{{problemData.name}}</h1>
+            <h4 class="open-sans">{{problemData.description}}</h4>
         </div>
     </div>
     <br>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-6 col-sm-12 solutions-button" ng-hide="userData.userAnswered">
             <!-- HINT BUTTON -->
-            <button class="btn btn-default btn-block btn-lg" ng-click="showNewHint(hintNumber)">I need a hint</button>
+            <button type="button" class="btn btn-default btn-block btn-lg" ng-click="showNewHint(hintNumber)">I need a hint</button>
         </div>
         </form>
     </div>
@@ -35,7 +35,6 @@
     <div class="col-md-12">
         <div ng-repeat="hint in hintsShown" class="alert alert-info alert-dismissible" role="alert">
             <center>
-                <h2><strong>Hint {{$index}}</strong></h2>
                 <p>{{hint}}</p>
             </center>
         </div>
@@ -50,7 +49,6 @@
         <div class="alert alert-success alert-dismissible" role="alert">
             <center>
                 <h2><strong>Nice one!</strong></h2>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
             </center>
         </div>
     </div>
@@ -58,20 +56,20 @@
         <div class="alert alert-danger alert-dismissible" role="alert">
             <center>
                 <h2><strong>Oh snap!</strong></h2>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
             </center>
         </div>
     </div>
     <!-- DETAIL EXPLANATION -->
-    <div ng-include="'/problems/problem1/solution1.html'"></div>
+    <div ng-include="'/problems/problem3/solution3.html'"></div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <h4 class="pull-right"><a href=".#/problems">Want to try another?</a></h4>
+        <h4 class="pull-right"><a ui-sref="problems">Want to try another?</a></h4>
     </div>
 </div>
+<!-- SHOW OFF OBJECTS
 <div class="row">
-    <!-- SHOW OFF OBJECTS -->
+
         <br>
         <br>
         <br>
@@ -81,5 +79,4 @@ problemData {{problemData|json}}
 userData {{userData | json}}
 hintsShown {{hintsShown | json}}
         </pre>
-</div>
-</div>
+</div>-->

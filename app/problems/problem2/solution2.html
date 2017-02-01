@@ -1,0 +1,158 @@
+<div class="col-md-12">
+    <h2>Approach #1 </h2>
+    <p>Sort the list using quicksort using the size of each element as the parameters to arrange it in descending order.
+Then, from string S, iterate on elements s to its right. If s is a substring of S, remove s from S. Continue iterating to the right until S is empty, meaning that it is made of items of the list</p>
+<div hljs hljs-no-escape>
+public static class ListCompare implements Comparator<String> {
+        public int compare(String s1, String s2) {
+            if (s1.length() < s2.length())
+                return 1;
+            else if (s1.length() > s2.length())
+                return -1;
+            else
+                return 0;
+        }
+    }
+
+    public static String longestSurString(String[] ss) {
+        Arrays.sort(ss, new ListCompare ());
+        for (String S: ss) {
+            String b = new String(s);
+            for (String s: ss) {
+                if (!s.equals(b) && S.contains(s)) {
+                    S = S.replace(s, "");
+                }
+            }
+            if (S.length() == 0)
+                return b;
+        }
+        return null;
+    }
+</div>
+
+    <h3>Complexity Analysis</h3>
+    <ul>
+        <li>Time complexity: O(n^2)</li>
+    </ul>
+    <p>To improve on this we can build the same model on trie data structure.Trie data structure, also known as a prefix tree. It is space and time efficient structures for text storage and search.</p>
+<div hljs hljs-no-escape>
+class Node:
+    def __init__(self, letter=None, isTerminal=False):
+        self.letter=letter
+        self.children={}
+        self.isTerminal=isTerminal
+def insert(self, word):
+    current=self.root
+    for letter in word:
+        if letter not in current.children:
+            current.children[letter]=Node(letter)
+        current=current.children[letter]
+    current.isTerminal=True
+
+def getAllPrefixesOfWord(self, word):
+    prefix=''
+    prefixes=[]
+    current=self.root
+    for letter in word:
+        if letter not in current.children:
+            return prefixes
+        current=current.children[letter]
+        prefix+=letter
+        if current.isTerminal:
+            prefixes.append(prefix)
+    return prefixes
+
+</div>
+<br>
+    <p>The isTerminal field in a Node class means that the word constructed by letters from the root to the current node is a valid word. The insert function of the trie just adds the given word to the trie.The more important getAllPrefixesOfWord function takes a word as input, and returns all the valid prefixes of that word.<p></p>The algorithm works as follows, we scan the input list from the beginning and insert each word into the trie. Right after inserting a word, we check whether it has any prefixes. If yes, then it’s a candidate for the longest compound word.</p>
+
+<div hljs hljs-no-escape>
+     def longestWord(words):
+    #Add words to the trie, and pairs to the queue
+    trie=Trie()
+    queue=collections.deque()
+    for word in words:
+        prefixes=trie.getAllPrefixesOfWord(word)
+        for prefix in prefixes:
+            queue.append( (word, word[len(prefix):]) )
+        trie.insert(word)
+
+    #Process the queue
+    longestWord=''
+    maxLength=0
+    while queue:
+        word, suffix = queue.popleft()
+        if suffix in trie and len(word)&gt;maxLength:
+            longestWord=word
+            maxLength=len(word)
+        else:
+            prefixes=trie.getAllPrefixesOfWord(suffix)
+            for prefix in prefixes:
+                queue.append( (word, suffix[len(prefix):]) )
+
+    return longestWord
+
+//Trie Class Implementation:
+class Trie:
+    def __init__(self):
+        self.root=Node('')
+
+    def __repr__(self):
+        self.output([self.root])
+        return ''
+
+    def output(self, currentPath, indent=''):
+        #Depth First Search
+        currentNode=currentPath[-1]
+        if currentNode.isTerminal:
+            word=''.join([node.letter for node in currentPath])
+            print indent+word
+            indent+='  '
+        for letter, node in sorted(currentNode.children.items()):
+            self.output(currentPath[:]+[node], indent)
+
+    def insert(self, word):
+        current=self.root
+        for letter in word:
+            if letter not in current.children:
+                current.children[letter]=Node(letter)
+            current=current.children[letter]
+        current.isTerminal=True
+
+    def __contains__(self, word):
+        current=self.root
+        for letter in word:
+            if letter not in current.children:
+                return False
+            current=current.children[letter]
+        return current.isTerminal
+
+    def getAllPrefixesOfWord(self, word):
+        prefix=''
+        prefixes=[]
+        current=self.root
+        for letter in word:
+            if letter not in current.children:
+                return prefixes
+            current=current.children[letter]
+            prefix+=letter
+            if current.isTerminal:
+                prefixes.append(prefix)
+        return prefixes
+
+</div>
+
+    <h3>Complexity Analysis</h3>
+    <ul>
+        <li>Time complexity: This algorithm has the time complexity of O(kN) where k is a constant in between 5 and 10.</li>
+        <li>Space complexity: O(m) where m is number of nodes need to be inserted</li>
+    </ul>
+    <br>
+<div class="row">
+    <div class="col-sm-12">
+        <hr width=25% class="pull-left">
+    </div>
+    <div class="col-sm-12">
+        <p class="pull-left" style="margin-bottom: 5px; color:#9d9d9d; font-size: 14px">Reference: <a style="color:#9d9d9d" target="_blank" href="https://leetcode.com/articles/implement-trie-prefix-tree/ " title="">https://leetcode.com/articles/implement-trie-prefix-tree/</a></p>
+    </div>
+</div>

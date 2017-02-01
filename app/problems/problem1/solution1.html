@@ -1,8 +1,8 @@
 <div class="col-md-12">
     <h2>Approach #1 (Brute Force) [Accepted]</h2>
     <p>The brute force approach is simple. Loop through each element x and find if there is another value that equals to target - x.</p>
-    <pre>
-        <code class="java">
+
+<div hljs hljs-no-escape>
 public int[] twoSum(int[] nums, int target) {
     for (int i = 0; i < nums.length; i++) {
         for (int j = i + 1; j < nums.length; j++) {
@@ -13,18 +13,17 @@ public int[] twoSum(int[] nums, int target) {
     }
     throw new IllegalArgumentException("No two sum solution");
 }
-        </code>
-    </pre>
+</div>
     <h3>Complexity Analysis</h3>
     <ul>
         <li>Time complexity: O(n^2). For each element, we try to find its complement by looping through the rest of array which takes O(n) time. Therefore, the time complexity is O(n^2).</li>
         <li>Space complexity: O(1)</li>
     </ul>
+    <br>
     <p>Improving onto that we know that we need to find the students with the complement amount of money so that the net sum is exactly the target amount and then find their respective indexes.</p>
     <p>To achieve that there is a trade off between time and space. As we saw in the previous method the time complexity is high but space complexity is O(1). Now to change it we use hash table and reduce the time complexity to O(1) from O(n) for look up. This does takes into consideration that there is no or almost zero chances for collision to happen during hashing.</p>
     <p>Finally, below in the code there two phases where in first the student data with their money is stored into the hash table and in the second phase the complement is being searched while also keeping a check that the number itself is not the complement.</p>
-    <pre>
-        <code>
+<div hljs hljs-no-escape>
 public int[] twoSum(int[] nums, int target) {
     Map<Integer, Integer> map = new HashMap<>();
     for (int i = 0; i < nums.length; i++) {
@@ -37,25 +36,38 @@ public int[] twoSum(int[] nums, int target) {
         }
     }
     throw new IllegalArgumentException("No two sum solution");
-}
-        </code>
-    </pre>
+}</div>
     <h3>Complexity Analysis</h3>
     <ul>
         <li>Time complexity: O(n). We traverse the list containing n elements exactly twice. Since the hash table reduces the look up time to O(1), the time complexity is O(n).</li>
         <li>Space complexity: O(n). The extra space required depends on the number of items stored in the hash table, which stores exactly n elements.</li>
     </ul>
+    <br>
     <p>To improve the functionality even further every element being inserted can be checked for its complement in the previously completed hash table and if it exist then there is no need to parse the rest of the data into the hash table</p>
-    <pre>
-        <code>
-public int[] twoSum(int[] nums, int target) { Map
-    <Integer, Integer> map = new HashMap
-        <>(); for (int i = 0; i
-            < nums.length; i++) { int complement=t arget - nums[i]; if (map.containsKey(complement)) { return new int[] { map.get(complement), i }; } map.put(nums[i], i); } throw new IllegalArgumentException( "No two sum solution"); }
-    </code>
-</pre>
+<div hljs hljs-no-escape>
+public int[] twoSum(int[] nums, int target) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < nums.length; i++) {
+        int complement = target - nums[i];
+        if (map.containsKey(complement)) {
+            return new int[] { map.get(complement), i };
+        }
+        map.put(nums[i], i);
+    }
+    throw new IllegalArgumentException("No two sum solution");
+}
+</div>
     <h3>Complexity Analysis</h3>
     <ul>
         <li>Time complexity: O(n). We traverse the list containing n elements only once. Each look up in the table costs only O(1) time.</li>
         <li>Space complexity: O(n). The extra space required depends on the number of items stored in the hash table, which stores at most n elements.</li>
     </ul>
+<br>
+<div class="row">
+    <div class="col-sm-12">
+        <hr width=25% class="pull-left">
+    </div>
+    <div class="col-sm-12">
+        <p class="pull-left" style="margin-bottom: 5px; color:#9d9d9d; font-size: 14px">Reference: <a style="color:#9d9d9d" target="_blank" href="https://leetcode.com/articles/two-sum/" title="">https://leetcode.com/articles/two-sum/</a></p>
+    </div>
+</div>
