@@ -1,8 +1,8 @@
 # CodeJam
 
-This project aims at analyzing solutions and their improvements for some of the most common algorithms questions asked for a technical role at an industry by helping the user relate how a particular problem is solved using a pool of algorithms. As we all know most of the time whether in an interview or at the workplace the problem at hand will never be specific, it will be for us to understand and fit the appropriate solution to the problem. 
+A web app that provided multiple solutions for common programming challenges, each solution includes a breakdown of its performance based on asymptotic notation analysis.
 
-This project was develop as a part of CS608 Algorithms & Computing Theory course at Pace University.
+Developed as a part of the course: CS608 Algorithms & Computing Theory at Pace University.
 
 ## Table of Contents
 
